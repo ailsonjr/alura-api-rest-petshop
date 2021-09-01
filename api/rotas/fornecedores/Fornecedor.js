@@ -33,6 +33,25 @@ class Fornecedor {
     this.dataAtualizacao = encontrado.dataAtualizacao;
     this.versao = encontrado.versao;
   }
+
+  async atualizar() {
+    await TabelaFornecedor.pegarPorId(this.id);
+    const fields = ['empresa', 'email', 'categoria'];
+    const dataToUpdate = {};
+
+    fields.forEach((field) => {
+      const value = this[field];
+      if (typeof value === 'string' && value.length > 0) {
+        dataToUpdate[field] = value;
+      }
+
+      if (Object.keys(dataToUpdate).length === 0) {
+        throw new Error('Não foram fornecidos dados para atualizar');
+      }
+
+      TabelaFornecedor.atualizar(this.id, dataToUpdate);
+    });
+  }
 }
 
 module.exports = Fornecedor;
