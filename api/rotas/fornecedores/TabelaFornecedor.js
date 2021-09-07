@@ -1,3 +1,4 @@
+const { removeAllListeners } = require('nodemon');
 const Modelo = require('./ModeloTabelaFornecedor');
 
 module.exports = {
@@ -17,5 +18,9 @@ module.exports = {
 
   atualizar(id, dataToUpdate) {
     return Modelo.update(dataToUpdate, { where: { id } });
+  },
+
+  remover(id) {
+    return Modelo.destroy({ where: { id } })
   }
 };
