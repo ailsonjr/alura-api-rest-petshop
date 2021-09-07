@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
   );
 });
 
+
 router.post('/', async (req, res) => {
   try {
     const reciveData = req.body;
@@ -21,6 +22,7 @@ router.post('/', async (req, res) => {
       JSON.stringify(fornecedor)
     );
   } catch (erro) {
+    res.send(400);
     res.send(
       JSON.stringify({
         mensagem: erro.message
@@ -28,6 +30,7 @@ router.post('/', async (req, res) => {
     );
   }
 });
+
 
 router.get('/:idFornecedor', async (req, res) => {
   try {
@@ -39,6 +42,7 @@ router.get('/:idFornecedor', async (req, res) => {
       JSON.stringify(fornecedor)
     );
   } catch (erro) {
+    res.send(404);
     res.send(
       JSON.stringify({
         mensagem: erro.message
@@ -46,6 +50,7 @@ router.get('/:idFornecedor', async (req, res) => {
     );
   }
 });
+
 
 router.put('/:idFornecedor', async (req, res) => {
   try {
@@ -57,6 +62,7 @@ router.put('/:idFornecedor', async (req, res) => {
     res.send(204);
     res.end();
   } catch (erro) {
+    res.send(400);
     res.send(
       JSON.stringify({
         mensagem: erro.message
@@ -64,6 +70,7 @@ router.put('/:idFornecedor', async (req, res) => {
     );
   }
 });
+
 
 router.delete('/:idFornecedor', async (req, res) => {
   try {
@@ -74,12 +81,14 @@ router.delete('/:idFornecedor', async (req, res) => {
     res.send(204);
     res.end();
   } catch (error) {
+    res.send(404);
     res.send(
       JSON.stringify({
         mensagem: erro.message
       })
     );
   }
-})
+});
+
 
 module.exports = router;
