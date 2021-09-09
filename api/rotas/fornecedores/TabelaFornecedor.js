@@ -1,5 +1,6 @@
 const { removeAllListeners } = require('nodemon');
 const Modelo = require('./ModeloTabelaFornecedor');
+const NaoEncontrado = require('../../erros/NaoEncontrado');
 
 module.exports = {
   listar() {
@@ -12,7 +13,7 @@ module.exports = {
 
   async pegarPorId(id) {
     const encontrado = await Modelo.findOne({ where: { id } });
-    if (!encontrado) throw new Error('Fornecedor não encontrado');
+    if (!encontrado) throw new NaoEncontrado();
     return encontrado;
   },
 
