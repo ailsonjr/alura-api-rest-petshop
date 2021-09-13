@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const config = require('config');
 const NaoEncontrado = require('./erros/NaoEncontrado');
+const CampoInvalido = require('./erros/CampoInvalido');
+const DadosNaoEncontrados = require('./erros/DadosNaoEncontrados');
 
 const port = config.get('api.port');
 
@@ -12,11 +14,12 @@ app.use(express.json());
 app.use('/api/fornecedores', router);
 
 app.use((erro, req, res, proximo) => {
-  if (erro instanceof NaoEncontrado) {
-    res.status(404);
-  } else {
-    res.send(400);
-  }
+  let status = 500;
+
+  if (erro instanceof NaoEncontrado) status(404);
+  if (erro instanceof CampoInvalido || erro instanceof DadosNaoEncontrados) status(400);
+
+  res.status(status);
   res.send(
     JSON.stringify({
       mensagem: erro.message,
